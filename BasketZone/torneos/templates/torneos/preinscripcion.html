@@ -1,0 +1,36 @@
+{% extends 'torneos/base.html' %}
+
+{% block content %}
+<h1>Pre-inscripción de equipo</h1>
+<p>Completa los datos para registrar tu equipo en un torneo.</p>
+
+<form method="post" style="background:#fff; padding:1rem; border-radius:6px; max-width:600px;">
+  {% csrf_token %}
+
+  <label>Seleccionar torneo</label><br>
+  <select name="torneo" style="width:100%; padding:.4rem; margin-bottom:.6rem;">
+    {% for t in torneos %}
+      <option value="{{ t.id }}">{{ t.nombre }} – {{ t.ciudad }}, {{ t.estado }}</option>
+    {% empty %}
+      <option disabled>No hay torneos disponibles</option>
+    {% endfor %}
+  </select>
+
+  <label>Nombre del equipo</label><br>
+  <input name="equipo_nombre" type="text" style="width:100%; padding:.4rem; margin-bottom:.6rem;">
+
+  <label>Ciudad / Estado</label><br>
+  <input name="equipo_ciudad" type="text" style="width:100%; padding:.4rem; margin-bottom:.6rem;">
+
+  <label>Responsable</label><br>
+  <input name="responsable_nombre" type="text" style="width:100%; padding:.4rem; margin-bottom:.6rem;">
+
+  <label>Teléfono</label><br>
+  <input name="responsable_telefono" type="text" style="width:100%; padding:.4rem; margin-bottom:.6rem;">
+
+  <label>Email</label><br>
+  <input name="responsable_email" type="email" style="width:100%; padding:.4rem; margin-bottom:.6rem;">
+
+  <button type="submit" class="btn-primary">Enviar pre-inscripción</button>
+</form>
+{% endblock %}

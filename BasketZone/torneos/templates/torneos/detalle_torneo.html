@@ -1,0 +1,50 @@
+{% extends 'torneos/base.html' %}
+
+{% block content %}
+<h1>{{ torneo.nombre }}</h1>
+
+<section style="display:flex; gap:2rem; flex-wrap:wrap; margin-bottom:2rem;">
+  <div style="flex:1 1 260px; background:#fff; padding:1rem; border-radius:6px;">
+    <h2>Datos del torneo</h2>
+    <p><strong>Fechas:</strong> {{ torneo.fecha_inicio }} - {{ torneo.fecha_fin }}</p>
+    <p><strong>Sede:</strong> {{ torneo.ciudad }}, {{ torneo.estado }}</p>
+    <p><strong>Costo:</strong> ${{ torneo.costo_inscripcion }}</p>
+    <p><strong>Juegos estimados:</strong> {{ torneo.num_juegos_estimados }}</p>
+    <p>{{ torneo.descripcion }}</p>
+    <a href="{% url 'torneos:preinscripcion' %}" class="btn-primary">Pre-inscribir equipo</a>
+  </div>
+
+  <div style="flex:1 1 260px; background:#fff; padding:1rem; border-radius:6px;">
+    <h2>Tabla de posiciones (placeholder)</h2>
+    <p>Aún no hay registros</p>
+  </div>
+</section>
+
+<section style="background:#fff; padding:1rem; border-radius:6px;">
+  <h2>Equipos registrados</h2>
+  <table style="width:100%; border-collapse:collapse; font-size:.9rem;">
+    <thead>
+      <tr>
+        <th style="border-bottom:1px solid #ccc; text-align:left; padding:.4rem;">Equipo</th>
+        <th style="border-bottom:1px solid #ccc; text-align:left; padding:.4rem;">Participantes</th>
+        <th style="border-bottom:1px solid #ccc; text-align:left; padding:.4rem;">Procedencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reg in equipos_registrados %}
+        <tr>
+          <td style="border-bottom:1px solid #eee; padding:.4rem;">{{ reg.equipo.nombre }}</td>
+          <td style="border-bottom:1px solid #eee; padding:.4rem;">
+            {% for p in reg.equipo.participantes.all %}
+              {{ p.nombre }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+          <td style="border-bottom:1px solid #eee; padding:.4rem;">{{ reg.equipo.ciudad }}, {{ reg.equipo.estado }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="3" style="padding:.4rem;">Aún no hay equipos aprobados.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

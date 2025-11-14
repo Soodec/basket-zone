@@ -1,0 +1,24 @@
+{% extends 'torneos/base.html' %}
+
+{% block content %}
+<section style="background:#fff; padding:2rem; border-radius:8px; margin-bottom:2rem;">
+  <h1>Bienvenido a Basket Zone</h1>
+  <p>Organiza y participa en torneos de baloncesto de forma fácil y profesional.</p>
+  <a href="{% url 'torneos:catalogo' %}?tipo=proximos" class="btn-primary">Ver próximos torneos</a>
+</section>
+
+<h2>Torneos destacados</h2>
+<div class="cards">
+  {% for t in torneos_destacados %}
+    <div class="card">
+      <h3>{{ t.nombre }}</h3>
+      <p>{{ t.ciudad }}, {{ t.estado }}</p>
+      <p><strong>Fechas:</strong> {{ t.fecha_inicio }} - {{ t.fecha_fin }}</p>
+      <p><strong>Costo:</strong> ${{ t.costo_inscripcion }}</p>
+      <a href="{% url 'torneos:detalle_torneo' t.pk %}" class="btn-primary">Ver detalle</a>
+    </div>
+  {% empty %}
+    <p>No hay torneos próximos registrados.</p>
+  {% endfor %}
+</div>
+{% endblock %}

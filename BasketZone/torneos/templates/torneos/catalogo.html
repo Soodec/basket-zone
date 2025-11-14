@@ -1,0 +1,19 @@
+{% extends 'torneos/base.html' %}
+
+{% block content %}
+<h1>{{ titulo }}</h1>
+<div class="cards">
+  {% for t in torneos %}
+    <div class="card">
+      <h3>{{ t.nombre }}</h3>
+      <p>{{ t.ciudad }}, {{ t.estado }}</p>
+      <p><strong>Fechas:</strong> {{ t.fecha_inicio }} - {{ t.fecha_fin }}</p>
+      <p><strong>Costo:</strong> ${{ t.costo_inscripcion }}</p>
+      <p><strong>Juegos estimados:</strong> {{ t.num_juegos_estimados }}</p>
+      <a href="{% url 'torneos:detalle_torneo' t.pk %}" class="btn-primary">Ver detalle</a>
+    </div>
+  {% empty %}
+    <p>No hay torneos en esta categoría.</p>
+  {% endfor %}
+</div>
+{% endblock %}
